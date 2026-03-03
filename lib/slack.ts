@@ -17,6 +17,11 @@ async function slackApiCall(
   body: Record<string, unknown>,
   token?: string
 ) {
+
+  console.log("=========================[slackApiCall]=========================");
+  console.log(JSON.stringify(body));
+  console.log("=========================[slackApiCall]=========================");
+
   const res = await fetch(`${SLACK_API_BASE}/${method}`, {
     method: "POST",
     headers: {
