@@ -184,19 +184,19 @@ export function ApprovalForm() {
                     disabled={isLoading}
                     className={cn(
                       "w-full justify-start text-left font-normal bg-background",
-                      !date && "text-muted-foreground"
+                      !startDate && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date
-                      ? format(date, "yyyy년 M월 d일 (EEEE)", { locale: ko })
+                    {startDate
+                      ? format(startDate, "yyyy년 M월 d일 (EEEE)", { locale: ko })
                       : "날짜를 선택하세요"}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={date}
+                    selected={startDate}
                     onSelect={(d) => d && setStartDate(d)}
                     locale={ko}
                     disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
@@ -220,19 +220,19 @@ export function ApprovalForm() {
                     disabled={isLoading}
                     className={cn(
                       "w-full justify-start text-left font-normal bg-background",
-                      !date && "text-muted-foreground"
+                      !endDate && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date
-                      ? format(date, "yyyy년 M월 d일 (EEEE)", { locale: ko })
+                    {endDate
+                      ? format(endDate, "yyyy년 M월 d일 (EEEE)", { locale: ko })
                       : "날짜를 선택하세요"}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={date}
+                    selected={endDate}
                     onSelect={(d) => d && setEndDate(d)}
                     locale={ko}
                     disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
