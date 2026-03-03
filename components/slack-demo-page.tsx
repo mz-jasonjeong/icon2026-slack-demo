@@ -22,10 +22,10 @@ export function SlackDemoPage() {
           </div>
           <div>
             <h1 className="text-lg font-semibold text-foreground text-balance">
-              Slack Integration Demo
+              Megazone ICON 2026 Slack Demo
             </h1>
             <p className="text-sm text-muted-foreground">
-              전자결재 발송 및 휴가 상태 관리
+              
             </p>
           </div>
         </div>
@@ -63,8 +63,7 @@ export function SlackDemoPage() {
       <footer className="border-t border-border bg-card py-4">
         <div className="mx-auto max-w-2xl px-4">
           <p className="text-center text-xs text-muted-foreground">
-            Slack API를 활용한 데모 페이지입니다. 실제 동작을 위해 환경변수
-            설정이 필요합니다.
+            Slack Demo
           </p>
         </div>
       </footer>

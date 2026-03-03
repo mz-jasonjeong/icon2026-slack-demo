@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Slack Integration Demo',
-  description: 'Slack 전자결재 및 휴가 상태 관리 데모',
+  title: 'Megazone ICON 2026 Slack DEMO',
+  description: 'Slack DEMO',
   generator: 'v0.app',
   icons: {
     icon: [

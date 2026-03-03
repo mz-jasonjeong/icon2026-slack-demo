@@ -37,18 +37,25 @@ async function slackApiCall(
 
 // Approval type definitions
 export const APPROVAL_TYPES: Record<string, string> = {
-  OptLC1LAMZV: "보건연차",
-  OptDWJGFTNE: "생일연차",
   OptVX9TTJMY: "연차",
+  OptDWJGFTNE: "생일연차",
+  OptLC1LAMZV: "보건연차",
 };
 
 // Fixed recipient (approver) User ID
 export const APPROVER_USER_ID = "U0AGKHQQGBV";
 
-export async function createListItem(title: string, approvalType: string) {
+export async function createListItem(title: string, desc: string, approvalType: string, startdt: number, enddt: number) {
   const listId = process.env.SLACK_LIST_ID;
   const titleColumnId = process.env.SLACK_LIST_TITLE_COLUMN_ID;
+  const descColumnId = process.env.SLACK_LIST_DESCRIPTION_COLUMN_ID;
   const typeColumnId = process.env.SLACK_LIST_TYPE_COLUMN_ID;
+
+  const requesterColumnId = process.env.SLICK_LIST_REQUESTER_COLUMN_ID;
+  const approverColumnId = process.env.SLICK_LIST_APPROVER_COLUMN_ID;
+
+  const startDTColumnId = process.env.SLICK_LIST_STARTDT_COLUMN_ID;
+  const endDTColumnId = process.env.SLICK_LIST_ENDDT_COLUMN_ID;
 
   if (!listId || !titleColumnId || !typeColumnId) {
     throw new Error("SLACK_LIST_ID, SLACK_LIST_TITLE_COLUMN_ID, or SLACK_LIST_TYPE_COLUMN_ID is not set");
@@ -75,6 +82,39 @@ export async function createListItem(title: string, approvalType: string) {
         column_id: typeColumnId,
         select: [approvalType],
       },
+      {
+        column_id: descColumnId,
+        rich_text: [
+          {
+            type: "rich_text",
+            elements: [
+              {
+                type: "rich_text_section",
+                elements: [{ type: "text", text: desc }],
+              },
+            ],
+          },
+        ],
+      },
+
+      {
+        column_id: requesterColumnId,
+        user: ['U0AGNGQ1KFF'],
+      },
+      {
+        column_id: approverColumnId,
+        user: ['U0AGKHQQGBV'],
+      },
+
+      {
+        column_id: startDTColumnId,
+        date: [startdt],
+      },
+      {
+        column_id: endDTColumnId,
+        date: [enddt],
+      },
+
     ],
   });
 }

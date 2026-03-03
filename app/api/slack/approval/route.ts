@@ -9,7 +9,7 @@ import {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, approvalType } = body;
+    const { title, desc, approvalType, startdt, enddt } = body;
 
     if (!title || !approvalType) {
       return NextResponse.json(
@@ -25,8 +25,11 @@ export async function POST(request: Request) {
       );
     }
 
+// startdt:startdtString,
+// enddt:enddtString,
+
     // 1. Create a list item in Slack Lists
-    const listResult = await createListItem(title, approvalType);
+    const listResult = await createListItem(title, desc, approvalType, startdt, enddt);
     const listItemId = listResult.item?.id ?? "unknown";
 
     // 2. Send DM to the fixed approver with approval buttons

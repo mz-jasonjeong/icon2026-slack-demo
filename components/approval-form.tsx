@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,17 +19,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import { toast } from "sonner";
-import { FileText, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { FileText, Send, Loader2, CheckCircle2, CalendarIcon, PalmtreeIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const APPROVAL_TYPES = [
-  { value: "OptLC1LAMZV", label: "보건연차" },
-  { value: "OptDWJGFTNE", label: "생일연차" },
   { value: "OptVX9TTJMY", label: "연차" },
+  { value: "OptDWJGFTNE", label: "생일연차" },
+  { value: "OptLC1LAMZV", label: "보건연차" },
 ] as const;
 
 export function ApprovalForm() {
   const [title, setTitle] = useState("");
+
+  const today = useMemo(() => new Date(), []);
+
+  const [date, setDate, ] = useState<Date>(today);
+  const [startDate, setStartDate] = useState<Date>(today);
+  const [endDate, setEndDate] = useState<Date>(today);
+
   const [description, setDescription] = useState("");
   const [approvalType, setApprovalType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,13 +67,17 @@ export function ApprovalForm() {
     setLastResult(null);
 
     try {
+      const startdtString = format(startDate, "yyyy-MM-dd");
+      const enddtString = format(endDate, "yyyy-MM-dd");
+
       const res = await fetch("/api/slack/approval", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: description
-            ? `${title.trim()}\n${description.trim()}`
-            : title.trim(),
+          title: `${title.trim()}`,
+          desc:`${description.trim()}`,
+          startdt:startdtString,
+          enddt:enddtString,
           approvalType,
         }),
       });
@@ -147,6 +167,78 @@ export function ApprovalForm() {
                 disabled={isLoading}
                 className="bg-background"
               />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="approval-title"
+                className="text-sm font-medium text-foreground"
+              >
+                시작일
+              </Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="approval-start-date"
+                    variant="outline"
+                    disabled={isLoading}
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-background",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date
+                      ? format(date, "yyyy년 M월 d일 (EEEE)", { locale: ko })
+                      : "날짜를 선택하세요"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={(d) => d && setStartDate(d)}
+                    locale={ko}
+                    disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="approval-title"
+                className="text-sm font-medium text-foreground"
+              >
+                종료일
+              </Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="approval-end-date"
+                    variant="outline"
+                    disabled={isLoading}
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-background",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date
+                      ? format(date, "yyyy년 M월 d일 (EEEE)", { locale: ko })
+                      : "날짜를 선택하세요"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={(d) => d && setEndDate(d)}
+                    locale={ko}
+                    disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div className="flex flex-col gap-2">
