@@ -3,7 +3,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApprovalForm } from "@/components/approval-form";
 import { VacationStatusForm } from "@/components/vacation-status-form";
-import { FileText, PalmtreeIcon } from "lucide-react";
+import { WarRoomForm } from "@/components/war-room-form";
+import { FileText, PalmtreeIcon, BellElectric } from "lucide-react";
 
 export function SlackDemoPage() {
   return (
@@ -33,7 +34,7 @@ export function SlackDemoPage() {
 
       <main className="mx-auto max-w-2xl px-4 py-8">
         <Tabs defaultValue="approval" className="w-full">
-          <TabsList className="mb-6 grid w-full grid-cols-2">
+          <TabsList className="mb-6 grid w-full grid-cols-3">
             <TabsTrigger
               value="approval"
               className="flex items-center gap-2"
@@ -48,6 +49,14 @@ export function SlackDemoPage() {
               <PalmtreeIcon className="h-4 w-4" />
               <span>휴가 상태</span>
             </TabsTrigger>
+
+            <TabsTrigger
+              value="warroom"
+              className="flex items-center gap-2"
+            >
+              <BellElectric className="h-4 w-4" />
+              <span>War Room 구축</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="approval">
@@ -56,6 +65,10 @@ export function SlackDemoPage() {
 
           <TabsContent value="vacation">
             <VacationStatusForm />
+          </TabsContent>
+
+          <TabsContent value="warroom">
+            <WarRoomForm />
           </TabsContent>
         </Tabs>
       </main>

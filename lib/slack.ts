@@ -18,9 +18,9 @@ async function slackApiCall(
   token?: string
 ) {
 
-  console.log("=========================[slackApiCall]=========================");
-  console.log(JSON.stringify(body));
-  console.log("=========================[slackApiCall]=========================");
+  // console.log("=========================[slackApiCall]=========================");
+  // console.log(JSON.stringify(body));
+  // console.log("=========================[slackApiCall]=========================");
 
   const res = await fetch(`${SLACK_API_BASE}/${method}`, {
     method: "POST",
@@ -334,5 +334,41 @@ export async function openCommentModal(
         },
       ],
     },
+  });
+}
+
+
+// ─── War Room ────────────────────────────────────────
+export async function createWarRoom(
+  channelName: string
+) {
+
+  // console.log("==============================")
+  // console.log(channelName)
+  // console.log("==============================")
+  const timestamp = Date.now(); 
+  const timestampInSeconds = Math.floor(Date.now() / 1000);
+  const tempchName = channelName.toLowerCase().trim().replace(/\s+/g, '_').replace(/[^a-z0-9_\-가-힣ㄱ-ㅎㅏ-ㅣ]/g, '').substring(0, 80);
+
+  const chName = `war-room_${tempchName}_${timestampInSeconds}`.substring(0, 80);
+
+  return slackApiCall("conversations.create", {
+    name: chName,
+    team_id: 'T0AGDKQ8VPF',
+    is_private:true
+  });
+}
+
+export async function warRoomInvite(
+  channelID: string
+) {
+
+  // console.log("==============================")
+  // console.log(channelID)
+  // console.log("==============================")
+
+  return slackApiCall("conversations.invite", {
+    channel: channelID,
+    users: ['U0AGNGQ1KFF', 'U0AGKHQQGBV', 'U0AGPT99GBG', 'U0AGF0Z1LGN', 'U0AGRV9PMD0']
   });
 }
