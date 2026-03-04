@@ -10,7 +10,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Megazone ICON 2026 Slack DEMO',
   description: 'Slack DEMO',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
@@ -22,8 +21,8 @@ export const metadata: Metadata = {
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/icon-light-32x32.png',
+        type: 'image/png',
       },
     ],
     apple: '/apple-icon.png',
