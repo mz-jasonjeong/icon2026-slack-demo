@@ -42,7 +42,7 @@ export function SlackDemoPage() {
               className="flex items-center gap-2"
             >
               <PalmtreeIcon className="h-4 w-4" />
-              <span>휴가 상태</span>
+              <span>휴가 상태 적용</span>
             </TabsTrigger>
 
             <TabsTrigger

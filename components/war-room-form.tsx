@@ -165,6 +165,29 @@ export function WarRoomForm() {
       )}
 
       
+      <Card className="border-border bg-muted/30">
+        <CardContent className="pt-6">
+          <div className="flex flex-col gap-3">
+            <h4 className="text-sm font-semibold text-foreground">
+              War Room 구축 설명
+            </h4>
+            <div className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col gap-0.5">
+                  관제 시스템에서 장애 탐지 시 Slack에 채널(War Room)을 생성, 장애가 발생한 시스템의 담당자를 한 채널로 초대합니다.<br/>
+                  해당 채널에 모인 담당자끼리 지연업은 소통을 지원하여 빠른 장애 해결을 지원합니다.<br/>
+                  또한 채널에서 나눈 대화 및 자료는 장애보고서로 활용할 수 있습니다.(Slack AI 이용)
+                  
+                  
+                  <span className="text-xs text-muted-foreground">
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
     </div>
   );
 }
